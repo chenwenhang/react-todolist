@@ -1,36 +1,32 @@
 import React, { Component } from 'react';
-// react16弃用React.createClass，我这里用createReactClass创建组件
-import createReactClass from 'create-react-class'; 
 import ReactDOM from 'react-dom';
 import logo from './logo.svg';
 import './App.css';
 
-var TodoList = createReactClass({ // 父组件
-  getInitialState:function(){
-    return {
-        todolist:[]  //返回列表
-      };
-  },
-  handleChange:function(rows){
+class TodoList extends Component{ // 父组件
+  state = {
+    todolist:[]  //返回列表
+  }
+  handleChange(rows){
     //当发生增删改查时改变state重新渲染
     this.setState({
         todolist:rows
     });
-  },
-  render: function(){
+  }
+  render(){
     return (
         <div className="App-content">
           <h1>TodoList</h1>,
-          <AddItem todo={this.state.todolist} add={this.handleChange} />
-          <ItemList todo={this.state.todolist}  change={this.handleChange} />
+          <AddItem todo={this.state.todolist} add={this.handleChange.bind(this)} />
+          <ItemList todo={this.state.todolist}  change={this.handleChange.bind(this)} />
         </div>
-      );
+      )
   }
-});
+}
 
 
-var AddItem = createReactClass({ // 添加任务
-  addItem:function(){
+class AddItem extends Component{ // 添加任务
+  addItem(){
     //获取真实DOM 虚拟DOM无法获取表单元素的数据
     var inputDom = ReactDOM.findDOMNode(this.refs.inputnew);
     //获取数据
@@ -48,19 +44,19 @@ var AddItem = createReactClass({ // 添加任务
     this.props.add(rows);
     //清空输入框
     inputDom.value = "";
-  },
-  render: function(){
+  }
+  render(){
     return (
         <div>
           <input type="text" ref="inputnew" placeholder="Typing a newthing todo , click the item to delete." className="Item-input" />,
-          <button onClick={this.addItem} className="Item-button"> Add </button>
+          <button onClick={this.addItem.bind(this)} className="Item-button"> Add </button>
         </div>
-      );
+      )
   }
-});
+}
 
-var ItemList = createReactClass({ //任务列表
-  deleteItem:function(e){
+class ItemList extends Component{ //任务列表
+  deleteItem(e){
     //获取todolist列表
     var rows = this.props.todo;
     //获取当前条目的data-index
@@ -69,24 +65,25 @@ var ItemList = createReactClass({ //任务列表
     rows.splice(index,1);
     //回调改变state
     this.props.change(rows);
-  },
-  render: function(){
+  }
+  render(){
     return (
         <ul id="todolist" className="Item-ul" >
           {
             // 遍历数据
-            this.props.todo.map(function(item,i){
-              return(
-                <li key={i} data-index={i} className="Item-li" onClick={this.deleteItem} >  {/*加载自动触发！！！！！！！！！！！！！！！！*/}
+            this.props.todo.map(
+              (item,i)=>{
+                return(
+                <li key={i} data-index={i} className="Item-li" onClick={this.deleteItem.bind(this)} > 
                   <span>{item}</span>
                 </li>
               )
-            }.bind(this)) //this指向发生变化！！！！！！！！！！！！！绑定回来！！！
+              })
           }
         </ul>
-      );
+      )
     }
-});
+}
 
 class App extends Component {
   render() {
@@ -98,7 +95,7 @@ class App extends Component {
         </div>
         <TodoList />
       </div>
-    );
+    )
   }
 }
 
