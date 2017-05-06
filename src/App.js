@@ -4,16 +4,18 @@ import logo from './logo.svg';
 import './App.css';
 
 class TodoList extends Component{ // 父组件
-  state = {
-    todolist:[]  //返回列表
+  constructor(props) {
+    super(props);
+    //初始化state，存储todolist条目数组
+    this.state = {todolist:[]};
   }
-  handleChange(rows){
+  handleChange(rows) {
     //当发生增删改查时改变state重新渲染
     this.setState({
         todolist:rows
     });
   }
-  render(){
+  render() {
     return (
         <div className="App-content">
           <h1>TodoList</h1>,
@@ -26,7 +28,7 @@ class TodoList extends Component{ // 父组件
 
 
 class AddItem extends Component{ // 添加任务
-  addItem(){
+  addItem() {
     //获取真实DOM 虚拟DOM无法获取表单元素的数据
     var inputDom = ReactDOM.findDOMNode(this.refs.inputnew);
     //获取数据
@@ -45,7 +47,7 @@ class AddItem extends Component{ // 添加任务
     //清空输入框
     inputDom.value = "";
   }
-  render(){
+  render() {
     return (
         <div>
           <input type="text" ref="inputnew" placeholder="Typing a newthing todo , click the item to delete." className="Item-input" />,
@@ -56,7 +58,7 @@ class AddItem extends Component{ // 添加任务
 }
 
 class ItemList extends Component{ //任务列表
-  deleteItem(e){
+  deleteItem(e) {
     //获取todolist列表
     var rows = this.props.todo;
     //获取当前条目的data-index
@@ -66,7 +68,7 @@ class ItemList extends Component{ //任务列表
     //回调改变state
     this.props.change(rows);
   }
-  render(){
+  render() {
     return (
         <ul id="todolist" className="Item-ul" >
           {
