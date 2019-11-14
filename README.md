@@ -10,7 +10,7 @@
 
 ### 制作过程
 
-[https://chenwenhang.github.io/2017/05/06/react-simple-todolist/](https://chenwenhang.github.io/2017/05/06/react-simple-todolist/)
+[https://chenwenhang.github.io/my-blog/2017/05/06/react-simple-todolist/](https://chenwenhang.github.io/my-blog/2017/05/06/react-simple-todolist/)
 
 
 
